@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Main</title>
+  <script src="elm.min.js"></script>
+</head>
+
+<body>
+  <div id="elm"></div>
+  <script>
+  var app;
+  var xmlhttp = new XMLHttpRequest();
+
+  xmlhttp.onreadystatechange = function () {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+      app = Elm.Main.init({
+        node: document.getElementById('elm'),
+        flags: JSON.parse(xmlhttp.responseText)
+      });
+    }
+  }
+  xmlhttp.open("GET", "scenario.json");
+  xmlhttp.send();
+  </script>
+</body>
+</html>

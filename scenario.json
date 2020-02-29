@@ -1,0 +1,35 @@
+{
+  "title": "Fill the title of scenario",
+  "rules": [],
+  "gmToken": "tokenOfGM",
+  "players" :
+    [
+      {
+        "name"  : "pl 1",
+        "token" : "tokenOfPL1",
+        "flavors" : ["Player1 is cool", "murder"],
+        "timelines" : ["12:30; eat cookies", "13:00; kill"]
+      },
+      {
+        "name"  : "pl 2",
+        "token" : "tokenOfPL2",
+        "flavors" : ["yeaaaaaaaah"],
+        "timelines" : []
+      }
+    ],
+  "evidences" :
+    [
+      {
+        "name" : "evidence 1",
+        "password" : "passwordOfEvidence1",
+        "icon" : "Fill a url of icon of evidence1",
+        "contents" : "contents of evidence1"
+      },
+      {
+        "name" : "evidence 2",
+        "password" : "aiueo",
+        "icon" : "Fill a url of icon of evidence2",
+        "contents" : "contents of evidence2"
+      }
+    ]
+}

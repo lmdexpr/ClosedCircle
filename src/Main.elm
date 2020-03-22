@@ -6,7 +6,7 @@ import Dict exposing (Dict)
 import Browser
 import Browser.Navigation as Nav
 
-import Html exposing (Html, text, br, hr, input, button, p, img, li, ol, ul, h1, h2)
+import Html exposing (Html, text, br, hr, input, button, p, img, li, ol, ul, div, h1, h2)
 import Html.Attributes exposing (style, value, placeholder, disabled, src)
 import Html.Events exposing (onClick, onInput)
 
@@ -97,7 +97,7 @@ decoderOfPlayer =
 type alias Evidence =
   { name     : String
   , password : String
-  , icon     : Maybe Url.Url
+  , icon     : String
   , contents : String
   }
 
@@ -106,7 +106,7 @@ decoderOfEvidence =
   D.map4 Evidence
     (D.field "name" D.string)
     (D.field "password" D.string)
-    (D.field "icon" D.string |> D.map Url.fromString)
+    (D.field "icon" D.string)
     (D.field "contents" D.string)
 
 
@@ -165,8 +165,8 @@ invalidTokenBody rules token = guestBody rules token ++ [ br [] [], p [ style "c
 guestBody : List String -> String -> List (Html Msg)
 guestBody rules token =
   [ h1 [] [ text "Input Token: " ]
-  , input [ placeholder "Please input here", value token, onInput InputUserToken ] []
-  , button [ onClick Enter ] [ text "Enter" ]
+  , input [ style "font-size" "40px", placeholder "Please input here", value token, onInput InputUserToken ] []
+  , button [ style "font-size" "40px", onClick Enter ] [ text "Enter" ]
   , br [] []
   , h1 [] [ text "Rules" ]
   , ol [] <| map (\rule -> li [] [ text rule ]) rules
@@ -205,9 +205,11 @@ htmlOfEvidences dict =
 
 htmlOfEvidence : Bool -> Evidence -> List (Html Msg)
 htmlOfEvidence unlocked evidence =
-  [ img [ style "width" "40px", style "height" "40px", src <| Maybe.withDefault "" (Maybe.map Url.toString evidence.icon) ] []
-  , p [] [ text (evidence.name ++ "  ") , input [ placeholder (if unlocked then "UNLOCKED!" else "LOCKED"), disabled unlocked, onInput (InputEvidenceToken evidence.name) ] [] ]
-  ] ++ if unlocked then [ br [] [], p [] [ text evidence.contents ] ] else []
+  [ img [ style "width" "50px", style "height" "50px", src evidence.icon ] []
+  , text "　"
+  , input [ style "font-size" "40px", placeholder (if unlocked then "UNLOCKED!" else "LOCKED"), disabled unlocked, onInput (InputEvidenceToken evidence.name) ] []
+  , p [] [ text (" " ++ evidence.name ++ ": ") ]
+  ] ++ if unlocked then [ p [] [ text evidence.contents ] ] else []
 
 htmlOfPlayer : Player -> List (Html Msg)
 htmlOfPlayer pl =

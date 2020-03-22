@@ -5160,10 +5160,7 @@ var $author$project$Main$decoderOfEvidence = A5(
 	$author$project$Main$Evidence,
 	A2($elm$json$Json$Decode$field, 'name', $elm$json$Json$Decode$string),
 	A2($elm$json$Json$Decode$field, 'password', $elm$json$Json$Decode$string),
-	A2(
-		$elm$json$Json$Decode$map,
-		$elm$url$Url$fromString,
-		A2($elm$json$Json$Decode$field, 'icon', $elm$json$Json$Decode$string)),
+	A2($elm$json$Json$Decode$field, 'icon', $elm$json$Json$Decode$string),
 	A2($elm$json$Json$Decode$field, 'contents', $elm$json$Json$Decode$string));
 var $author$project$Main$Player = F7(
 	function (name, token, role, timelines, goal, points, evidences) {
@@ -5505,16 +5502,6 @@ var $elm$html$Html$Attributes$boolProperty = F2(
 var $elm$html$Html$Attributes$disabled = $elm$html$Html$Attributes$boolProperty('disabled');
 var $elm$html$Html$img = _VirtualDom_node('img');
 var $elm$html$Html$input = _VirtualDom_node('input');
-var $elm$core$Maybe$map = F2(
-	function (f, maybe) {
-		if (!maybe.$) {
-			var value = maybe.a;
-			return $elm$core$Maybe$Just(
-				f(value));
-		} else {
-			return $elm$core$Maybe$Nothing;
-		}
-	});
 var $elm$html$Html$Events$alwaysStop = function (x) {
 	return _Utils_Tuple2(x, true);
 };
@@ -5565,59 +5552,6 @@ var $elm$html$Html$Attributes$src = function (url) {
 };
 var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
-var $elm$url$Url$addPort = F2(
-	function (maybePort, starter) {
-		if (maybePort.$ === 1) {
-			return starter;
-		} else {
-			var port_ = maybePort.a;
-			return starter + (':' + $elm$core$String$fromInt(port_));
-		}
-	});
-var $elm$url$Url$addPrefixed = F3(
-	function (prefix, maybeSegment, starter) {
-		if (maybeSegment.$ === 1) {
-			return starter;
-		} else {
-			var segment = maybeSegment.a;
-			return _Utils_ap(
-				starter,
-				_Utils_ap(prefix, segment));
-		}
-	});
-var $elm$url$Url$toString = function (url) {
-	var http = function () {
-		var _v0 = url.an;
-		if (!_v0) {
-			return 'http://';
-		} else {
-			return 'https://';
-		}
-	}();
-	return A3(
-		$elm$url$Url$addPrefixed,
-		'#',
-		url.Z,
-		A3(
-			$elm$url$Url$addPrefixed,
-			'?',
-			url.ao,
-			_Utils_ap(
-				A2(
-					$elm$url$Url$addPort,
-					url.ak,
-					_Utils_ap(http, url.ac)),
-				url.ah)));
-};
-var $elm$core$Maybe$withDefault = F2(
-	function (_default, maybe) {
-		if (!maybe.$) {
-			var value = maybe.a;
-			return value;
-		} else {
-			return _default;
-		}
-	});
 var $author$project$Main$htmlOfEvidence = F2(
 	function (unlocked, evidence) {
 		return _Utils_ap(
@@ -5627,13 +5561,22 @@ var $author$project$Main$htmlOfEvidence = F2(
 					$elm$html$Html$img,
 					_List_fromArray(
 						[
-							A2($elm$html$Html$Attributes$style, 'width', '40px'),
-							A2($elm$html$Html$Attributes$style, 'height', '40px'),
-							$elm$html$Html$Attributes$src(
-							A2(
-								$elm$core$Maybe$withDefault,
-								'',
-								A2($elm$core$Maybe$map, $elm$url$Url$toString, evidence.ad)))
+							A2($elm$html$Html$Attributes$style, 'width', '50px'),
+							A2($elm$html$Html$Attributes$style, 'height', '50px'),
+							$elm$html$Html$Attributes$src(evidence.ad)
+						]),
+					_List_Nil),
+					$elm$html$Html$text('　'),
+					A2(
+					$elm$html$Html$input,
+					_List_fromArray(
+						[
+							A2($elm$html$Html$Attributes$style, 'font-size', '40px'),
+							$elm$html$Html$Attributes$placeholder(
+							unlocked ? 'UNLOCKED!' : 'LOCKED'),
+							$elm$html$Html$Attributes$disabled(unlocked),
+							$elm$html$Html$Events$onInput(
+							$author$project$Main$InputEvidenceToken(evidence.p))
 						]),
 					_List_Nil),
 					A2(
@@ -5641,23 +5584,11 @@ var $author$project$Main$htmlOfEvidence = F2(
 					_List_Nil,
 					_List_fromArray(
 						[
-							$elm$html$Html$text(evidence.p + '  '),
-							A2(
-							$elm$html$Html$input,
-							_List_fromArray(
-								[
-									$elm$html$Html$Attributes$placeholder(
-									unlocked ? 'UNLOCKED!' : 'LOCKED'),
-									$elm$html$Html$Attributes$disabled(unlocked),
-									$elm$html$Html$Events$onInput(
-									$author$project$Main$InputEvidenceToken(evidence.p))
-								]),
-							_List_Nil)
+							$elm$html$Html$text(' ' + (evidence.p + ': '))
 						]))
 				]),
 			unlocked ? _List_fromArray(
 				[
-					A2($elm$html$Html$br, _List_Nil, _List_Nil),
 					A2(
 					$elm$html$Html$p,
 					_List_Nil,
@@ -5683,6 +5614,25 @@ var $elm$core$List$intersperse = F2(
 				});
 			var spersed = A3($elm$core$List$foldr, step, _List_Nil, tl);
 			return A2($elm$core$List$cons, hd, spersed);
+		}
+	});
+var $elm$core$Maybe$map = F2(
+	function (f, maybe) {
+		if (!maybe.$) {
+			var value = maybe.a;
+			return $elm$core$Maybe$Just(
+				f(value));
+		} else {
+			return $elm$core$Maybe$Nothing;
+		}
+	});
+var $elm$core$Maybe$withDefault = F2(
+	function (_default, maybe) {
+		if (!maybe.$) {
+			var value = maybe.a;
+			return value;
+		} else {
+			return _default;
 		}
 	});
 var $author$project$Main$htmlOfEvidences = function (dict) {
@@ -5928,6 +5878,7 @@ var $author$project$Main$guestBody = F2(
 				$elm$html$Html$input,
 				_List_fromArray(
 					[
+						A2($elm$html$Html$Attributes$style, 'font-size', '40px'),
 						$elm$html$Html$Attributes$placeholder('Please input here'),
 						$elm$html$Html$Attributes$value(token),
 						$elm$html$Html$Events$onInput($author$project$Main$InputUserToken)
@@ -5937,6 +5888,7 @@ var $author$project$Main$guestBody = F2(
 				$elm$html$Html$button,
 				_List_fromArray(
 					[
+						A2($elm$html$Html$Attributes$style, 'font-size', '40px'),
 						$elm$html$Html$Events$onClick($author$project$Main$Enter)
 					]),
 				_List_fromArray(

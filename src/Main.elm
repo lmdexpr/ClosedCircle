@@ -178,15 +178,15 @@ gmBody scenario =
 
 plBody : Player -> Scenario -> Dict String String -> List (Html Msg)
 plBody pl scenario passOfEvidences =
-  [ text ("Player Mode: " ++ pl.name)
+  [ h1 [] [ text ("Player Mode: " ++ pl.name) ]
   , br [] []
   ] ++
   [ hr [] []
-  , text "Player Info: "
+  , h1 [] [ text "Player Info: " ]
   , br [] []
   ] ++ htmlOfPlayer pl ++
   [ hr [] []
-  , text ("Evidences:")
+  , h1 [] [ text ("Evidences:") ]
   , br [] []
   ] ++ htmlOfEvidences passOfEvidences scenario.evidences
 
@@ -198,7 +198,7 @@ htmlOfEvidences dict =
 htmlOfEvidence : Bool -> Evidence -> List (Html Msg)
 htmlOfEvidence unlocked evidence =
   [ img [ style "width" "40px", style "height" "40px", src <| Maybe.withDefault "" (Maybe.map Url.toString evidence.icon) ] []
-  , text evidence.name
+  , p [] [ text evidence.name ]
   , input [ placeholder (if unlocked then "UNLOCKED!" else "LOCKED"), disabled unlocked, onInput (InputEvidenceToken evidence.name) ] []
   ] ++ if unlocked then [ br [] [], p [] [ text evidence.contents ] ] else []
 
@@ -206,20 +206,16 @@ htmlOfPlayer : Player -> List (Html Msg)
 htmlOfPlayer pl =
   [ h2 [] [ text ("Name: " ++ pl.name) ]
   , br [] []
-  , h2 [] [ text "Role:" ]
-  , br [] []
+  , h2 [] [ text "Role" ]
   , p  [] [ text pl.role ]
   , br [] []
-  , h2 [] [ text "Timelines:"]
+  , h2 [] [ text "Timelines"]
+  , ul [] <| map (\str -> li [] [ text str ]) pl.timelines
   , br [] []
-  , ol [] <| map (\str -> li [] [ text str ]) pl.timelines
-  , br [] []
-  , h2 [] [ text "Goals:" ]
-  , br [] []
+  , h2 [] [ text "Goals" ]
   , p  [] [ text pl.goal ]
   , br [] []
-  , h2 [] [ text "Points:" ]
-  , br [] []
+  , h2 [] [ text "Points" ]
   , ol [] <| map (\str -> li [] [ text str ]) pl.points
   , br [] []
   , h2 [] [ text "Known Evidences" ]

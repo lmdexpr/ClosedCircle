@@ -5635,7 +5635,13 @@ var $author$project$Main$htmlOfEvidence = F2(
 								A2($elm$core$Maybe$map, $elm$url$Url$toString, evidence.ac)))
 						]),
 					_List_Nil),
-					$elm$html$Html$text(evidence.p),
+					A2(
+					$elm$html$Html$p,
+					_List_Nil,
+					_List_fromArray(
+						[
+							$elm$html$Html$text(evidence.p)
+						])),
 					A2(
 					$elm$html$Html$input,
 					_List_fromArray(
@@ -5710,6 +5716,7 @@ var $author$project$Main$htmlOfEvidences = function (dict) {
 var $elm$html$Html$h2 = _VirtualDom_node('h2');
 var $elm$html$Html$li = _VirtualDom_node('li');
 var $elm$html$Html$ol = _VirtualDom_node('ol');
+var $elm$html$Html$ul = _VirtualDom_node('ul');
 var $author$project$Main$htmlOfPlayer = function (pl) {
 	return _List_fromArray(
 		[
@@ -5726,9 +5733,8 @@ var $author$project$Main$htmlOfPlayer = function (pl) {
 			_List_Nil,
 			_List_fromArray(
 				[
-					$elm$html$Html$text('Role:')
+					$elm$html$Html$text('Role')
 				])),
-			A2($elm$html$Html$br, _List_Nil, _List_Nil),
 			A2(
 			$elm$html$Html$p,
 			_List_Nil,
@@ -5742,11 +5748,10 @@ var $author$project$Main$htmlOfPlayer = function (pl) {
 			_List_Nil,
 			_List_fromArray(
 				[
-					$elm$html$Html$text('Timelines:')
+					$elm$html$Html$text('Timelines')
 				])),
-			A2($elm$html$Html$br, _List_Nil, _List_Nil),
 			A2(
-			$elm$html$Html$ol,
+			$elm$html$Html$ul,
 			_List_Nil,
 			A2(
 				$elm$core$List$map,
@@ -5766,9 +5771,8 @@ var $author$project$Main$htmlOfPlayer = function (pl) {
 			_List_Nil,
 			_List_fromArray(
 				[
-					$elm$html$Html$text('Goals:')
+					$elm$html$Html$text('Goals')
 				])),
-			A2($elm$html$Html$br, _List_Nil, _List_Nil),
 			A2(
 			$elm$html$Html$p,
 			_List_Nil,
@@ -5782,9 +5786,8 @@ var $author$project$Main$htmlOfPlayer = function (pl) {
 			_List_Nil,
 			_List_fromArray(
 				[
-					$elm$html$Html$text('Points:')
+					$elm$html$Html$text('Points')
 				])),
-			A2($elm$html$Html$br, _List_Nil, _List_Nil),
 			A2(
 			$elm$html$Html$ol,
 			_List_Nil,
@@ -5919,19 +5922,32 @@ var $author$project$Main$invalidTokenBody = function (token) {
 					]))
 			]));
 };
+var $elm$html$Html$h1 = _VirtualDom_node('h1');
 var $author$project$Main$plBody = F3(
 	function (pl, scenario, passOfEvidences) {
 		return _Utils_ap(
 			_List_fromArray(
 				[
-					$elm$html$Html$text('Player Mode: ' + pl.p),
+					A2(
+					$elm$html$Html$h1,
+					_List_Nil,
+					_List_fromArray(
+						[
+							$elm$html$Html$text('Player Mode: ' + pl.p)
+						])),
 					A2($elm$html$Html$br, _List_Nil, _List_Nil)
 				]),
 			_Utils_ap(
 				_List_fromArray(
 					[
 						A2($elm$html$Html$hr, _List_Nil, _List_Nil),
-						$elm$html$Html$text('Player Info: '),
+						A2(
+						$elm$html$Html$h1,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Player Info: ')
+							])),
 						A2($elm$html$Html$br, _List_Nil, _List_Nil)
 					]),
 				_Utils_ap(
@@ -5940,7 +5956,13 @@ var $author$project$Main$plBody = F3(
 						_List_fromArray(
 							[
 								A2($elm$html$Html$hr, _List_Nil, _List_Nil),
-								$elm$html$Html$text('Evidences:'),
+								A2(
+								$elm$html$Html$h1,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Evidences:')
+									])),
 								A2($elm$html$Html$br, _List_Nil, _List_Nil)
 							]),
 						A2($author$project$Main$htmlOfEvidences, passOfEvidences, scenario.y)))));

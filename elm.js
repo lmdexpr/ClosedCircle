@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.Q.C === region.W.C)
+	if (region.R.C === region.X.C)
 	{
-		return 'on line ' + region.Q.C;
+		return 'on line ' + region.R.C;
 	}
-	return 'on lines ' + region.Q.C + ' through ' + region.W.C;
+	return 'on lines ' + region.R.C + ' through ' + region.X.C;
 }
 
 
@@ -1857,7 +1857,7 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aI,
+		impl.aJ,
 		impl.aP,
 		impl.aO,
 		function() { return function() {} }
@@ -2705,8 +2705,8 @@ var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
 		o: func(record.o),
-		R: record.R,
-		N: record.N
+		S: record.S,
+		O: record.O
 	}
 });
 
@@ -2975,10 +2975,10 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 
 		var value = result.a;
 		var message = !tag ? value : tag < 3 ? value.a : value.o;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.R;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.S;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.N) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.O) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3928,7 +3928,7 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aI,
+		impl.aJ,
 		impl.aP,
 		impl.aO,
 		function(sendToApp, initialModel) {
@@ -3964,11 +3964,11 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aI,
+		impl.aJ,
 		impl.aP,
 		impl.aO,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.P && impl.P(sendToApp)
+			var divertHrefToApp = impl.Q && impl.Q(sendToApp)
 			var view = impl.aQ;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
@@ -3977,12 +3977,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.aB);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.aC);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.au) && (_VirtualDom_doc.title = title = doc.au);
+				(title !== doc.av) && (_VirtualDom_doc.title = title = doc.av);
 			});
 		}
 	);
@@ -4038,12 +4038,12 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.aJ;
-	var onUrlRequest = impl.aK;
+	var onUrlChange = impl.aK;
+	var onUrlRequest = impl.aL;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		P: function(sendToApp)
+		Q: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4059,9 +4059,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.am === next.am
-							&& curr.ab === next.ab
-							&& curr.aj.a === next.aj.a
+							&& curr.an === next.an
+							&& curr.ac === next.ac
+							&& curr.ak.a === next.ak.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4069,9 +4069,9 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		aI: function(flags)
+		aJ: function(flags)
 		{
-			return A3(impl.aI, flags, _Browser_getUrl(), key);
+			return A3(impl.aJ, flags, _Browser_getUrl(), key);
 		},
 		aQ: impl.aQ,
 		aP: impl.aP,
@@ -4141,17 +4141,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { aG: 'hidden', aC: 'visibilitychange' }
+		? { aH: 'hidden', aD: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { aG: 'mozHidden', aC: 'mozvisibilitychange' }
+		? { aH: 'mozHidden', aD: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { aG: 'msHidden', aC: 'msvisibilitychange' }
+		? { aH: 'msHidden', aD: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { aG: 'webkitHidden', aC: 'webkitvisibilitychange' }
-		: { aG: 'hidden', aC: 'visibilitychange' };
+		? { aH: 'webkitHidden', aD: 'webkitvisibilitychange' }
+		: { aH: 'hidden', aD: 'visibilitychange' };
 }
 
 
@@ -4232,12 +4232,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		aq: _Browser_getScene(),
-		av: {
-			ax: _Browser_window.pageXOffset,
-			ay: _Browser_window.pageYOffset,
-			aw: _Browser_doc.documentElement.clientWidth,
-			aa: _Browser_doc.documentElement.clientHeight
+		ar: _Browser_getScene(),
+		aw: {
+			ay: _Browser_window.pageXOffset,
+			az: _Browser_window.pageYOffset,
+			ax: _Browser_doc.documentElement.clientWidth,
+			ab: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4247,8 +4247,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		aw: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		aa: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		ax: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		ab: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4271,15 +4271,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			aq: {
-				aw: node.scrollWidth,
-				aa: node.scrollHeight
+			ar: {
+				ax: node.scrollWidth,
+				ab: node.scrollHeight
 			},
-			av: {
-				ax: node.scrollLeft,
-				ay: node.scrollTop,
-				aw: node.clientWidth,
-				aa: node.clientHeight
+			aw: {
+				ay: node.scrollLeft,
+				az: node.scrollTop,
+				ax: node.clientWidth,
+				ab: node.clientHeight
 			}
 		};
 	});
@@ -4309,18 +4309,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			aq: _Browser_getScene(),
-			av: {
-				ax: x,
-				ay: y,
-				aw: _Browser_doc.documentElement.clientWidth,
-				aa: _Browser_doc.documentElement.clientHeight
+			ar: _Browser_getScene(),
+			aw: {
+				ay: x,
+				az: y,
+				ax: _Browser_doc.documentElement.clientWidth,
+				ab: _Browser_doc.documentElement.clientHeight
 			},
-			aE: {
-				ax: x + rect.left,
-				ay: y + rect.top,
-				aw: rect.width,
-				aa: rect.height
+			aF: {
+				ay: x + rect.left,
+				az: y + rect.top,
+				ax: rect.width,
+				ab: rect.height
 			}
 		};
 	});
@@ -4859,7 +4859,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {Y: fragment, ab: host, ag: path, aj: port_, am: protocol, an: query};
+		return {Z: fragment, ac: host, ah: path, ak: port_, an: protocol, ao: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5141,16 +5141,16 @@ var $elm$browser$Browser$document = _Browser_document;
 var $author$project$Main$Guest = {$: 2};
 var $author$project$Main$Model = F4(
 	function (role, token, passOfEvidences, scenario) {
-		return {I: passOfEvidences, D: role, O: scenario, v: token};
+		return {J: passOfEvidences, D: role, P: scenario, v: token};
 	});
 var $elm$json$Json$Decode$decodeValue = _Json_run;
 var $author$project$Main$Scenario = F5(
 	function (title, rules, gmToken, players, evidences) {
-		return {y: evidences, Z: gmToken, M: players, aN: rules, au: title};
+		return {y: evidences, _: gmToken, N: players, E: rules, av: title};
 	});
 var $author$project$Main$Evidence = F4(
 	function (name, password, icon, contents) {
-		return {U: contents, ac: icon, p: name, L: password};
+		return {V: contents, ad: icon, p: name, M: password};
 	});
 var $elm$json$Json$Decode$field = _Json_decodeField;
 var $elm$json$Json$Decode$map4 = _Json_map4;
@@ -5167,7 +5167,7 @@ var $author$project$Main$decoderOfEvidence = A5(
 	A2($elm$json$Json$Decode$field, 'contents', $elm$json$Json$Decode$string));
 var $author$project$Main$Player = F7(
 	function (name, token, role, timelines, goal, points, evidences) {
-		return {y: evidences, _: goal, p: name, ai: points, D: role, at: timelines, v: token};
+		return {y: evidences, aa: goal, p: name, aj: points, D: role, au: timelines, v: token};
 	});
 var $elm$json$Json$Decode$list = _Json_decodeList;
 var $elm$json$Json$Decode$map7 = _Json_map7;
@@ -5363,7 +5363,7 @@ var $elm$core$List$head = function (list) {
 };
 var $author$project$Main$tokenToRole = F2(
 	function (scenario, token) {
-		if (_Utils_eq(scenario.Z, token)) {
+		if (_Utils_eq(scenario._, token)) {
 			return $author$project$Main$GM;
 		} else {
 			var _v0 = $elm$core$List$head(
@@ -5372,7 +5372,7 @@ var $author$project$Main$tokenToRole = F2(
 					function (p) {
 						return _Utils_eq(p.v, token);
 					},
-					scenario.M));
+					scenario.N));
 			if (!_v0.$) {
 				var p = _v0.a;
 				return $author$project$Main$PL(p);
@@ -5385,7 +5385,7 @@ var $author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 0:
-				var _v1 = model.O;
+				var _v1 = model.P;
 				if (!_v1.$) {
 					var scenario = _v1.a;
 					return _Utils_Tuple2(
@@ -5412,7 +5412,7 @@ var $author$project$Main$update = F2(
 					_Utils_update(
 						model,
 						{
-							I: A3($elm$core$Dict$insert, evidenceName, token, model.I)
+							J: A3($elm$core$Dict$insert, evidenceName, token, model.J)
 						}),
 					$elm$core$Platform$Cmd$none);
 		}
@@ -5452,6 +5452,7 @@ var $elm$core$Dict$fromList = function (assocs) {
 		$elm$core$Dict$empty,
 		assocs);
 };
+var $elm$html$Html$h1 = _VirtualDom_node('h1');
 var $elm$html$Html$hr = _VirtualDom_node('hr');
 var $elm$core$Basics$composeL = F3(
 	function (g, f, x) {
@@ -5586,7 +5587,7 @@ var $elm$url$Url$addPrefixed = F3(
 	});
 var $elm$url$Url$toString = function (url) {
 	var http = function () {
-		var _v0 = url.am;
+		var _v0 = url.an;
 		if (!_v0) {
 			return 'http://';
 		} else {
@@ -5596,17 +5597,17 @@ var $elm$url$Url$toString = function (url) {
 	return A3(
 		$elm$url$Url$addPrefixed,
 		'#',
-		url.Y,
+		url.Z,
 		A3(
 			$elm$url$Url$addPrefixed,
 			'?',
-			url.an,
+			url.ao,
 			_Utils_ap(
 				A2(
 					$elm$url$Url$addPort,
-					url.aj,
-					_Utils_ap(http, url.ab)),
-				url.ag)));
+					url.ak,
+					_Utils_ap(http, url.ac)),
+				url.ah)));
 };
 var $elm$core$Maybe$withDefault = F2(
 	function (_default, maybe) {
@@ -5632,7 +5633,7 @@ var $author$project$Main$htmlOfEvidence = F2(
 							A2(
 								$elm$core$Maybe$withDefault,
 								'',
-								A2($elm$core$Maybe$map, $elm$url$Url$toString, evidence.ac)))
+								A2($elm$core$Maybe$map, $elm$url$Url$toString, evidence.ad)))
 						]),
 					_List_Nil),
 					A2(
@@ -5640,19 +5641,19 @@ var $author$project$Main$htmlOfEvidence = F2(
 					_List_Nil,
 					_List_fromArray(
 						[
-							$elm$html$Html$text(evidence.p)
-						])),
-					A2(
-					$elm$html$Html$input,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$placeholder(
-							unlocked ? 'UNLOCKED!' : 'LOCKED'),
-							$elm$html$Html$Attributes$disabled(unlocked),
-							$elm$html$Html$Events$onInput(
-							$author$project$Main$InputEvidenceToken(evidence.p))
-						]),
-					_List_Nil)
+							$elm$html$Html$text(evidence.p + '  '),
+							A2(
+							$elm$html$Html$input,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$placeholder(
+									unlocked ? 'UNLOCKED!' : 'LOCKED'),
+									$elm$html$Html$Attributes$disabled(unlocked),
+									$elm$html$Html$Events$onInput(
+									$author$project$Main$InputEvidenceToken(evidence.p))
+								]),
+							_List_Nil)
+						]))
 				]),
 			unlocked ? _List_fromArray(
 				[
@@ -5662,7 +5663,7 @@ var $author$project$Main$htmlOfEvidence = F2(
 					_List_Nil,
 					_List_fromArray(
 						[
-							$elm$html$Html$text(evidence.U)
+							$elm$html$Html$text(evidence.V)
 						]))
 				]) : _List_Nil);
 	});
@@ -5707,7 +5708,7 @@ var $author$project$Main$htmlOfEvidences = function (dict) {
 						A2(
 							$elm$core$Maybe$map,
 							function (p) {
-								return _Utils_eq(p, evi.L);
+								return _Utils_eq(p, evi.M);
 							},
 							A2($elm$core$Dict$get, evi.p, dict))),
 					evi);
@@ -5764,7 +5765,7 @@ var $author$project$Main$htmlOfPlayer = function (pl) {
 								$elm$html$Html$text(str)
 							]));
 				},
-				pl.at)),
+				pl.au)),
 			A2($elm$html$Html$br, _List_Nil, _List_Nil),
 			A2(
 			$elm$html$Html$h2,
@@ -5778,7 +5779,7 @@ var $author$project$Main$htmlOfPlayer = function (pl) {
 			_List_Nil,
 			_List_fromArray(
 				[
-					$elm$html$Html$text(pl._)
+					$elm$html$Html$text(pl.aa)
 				])),
 			A2($elm$html$Html$br, _List_Nil, _List_Nil),
 			A2(
@@ -5802,7 +5803,7 @@ var $author$project$Main$htmlOfPlayer = function (pl) {
 								$elm$html$Html$text(str)
 							]));
 				},
-				pl.ai)),
+				pl.aj)),
 			A2($elm$html$Html$br, _List_Nil, _List_Nil),
 			A2(
 			$elm$html$Html$h2,
@@ -5832,7 +5833,35 @@ var $author$project$Main$gmBody = function (scenario) {
 	return _Utils_ap(
 		_List_fromArray(
 			[
-				$elm$html$Html$text('Game Master Mode'),
+				A2(
+				$elm$html$Html$h1,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Game Master Mode')
+					])),
+				A2(
+				$elm$html$Html$h1,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Rules')
+					])),
+				A2(
+				$elm$html$Html$ul,
+				_List_Nil,
+				A2(
+					$elm$core$List$map,
+					function (rule) {
+						return A2(
+							$elm$html$Html$li,
+							_List_Nil,
+							_List_fromArray(
+								[
+									$elm$html$Html$text(rule)
+								]));
+					},
+					scenario.E)),
 				A2($elm$html$Html$br, _List_Nil, _List_Nil)
 			]),
 		_Utils_ap(
@@ -5842,7 +5871,7 @@ var $author$project$Main$gmBody = function (scenario) {
 					A2(
 						$elm$core$List$map,
 						function (evi) {
-							return _Utils_Tuple2(evi.p, evi.L);
+							return _Utils_Tuple2(evi.p, evi.M);
 						},
 						scenario.y)),
 				scenario.y),
@@ -5855,7 +5884,7 @@ var $author$project$Main$gmBody = function (scenario) {
 							A2($elm$html$Html$hr, _List_Nil, _List_Nil),
 							A2($elm$html$Html$br, _List_Nil, _List_Nil)
 						]),
-					A2($elm$core$List$map, $author$project$Main$htmlOfPlayer, scenario.M)))));
+					A2($elm$core$List$map, $author$project$Main$htmlOfPlayer, scenario.N)))));
 };
 var $author$project$Main$Enter = {$: 0};
 var $author$project$Main$InputUserToken = function (a) {
@@ -5879,50 +5908,79 @@ var $elm$html$Html$Events$onClick = function (msg) {
 		$elm$json$Json$Decode$succeed(msg));
 };
 var $elm$html$Html$Attributes$value = $elm$html$Html$Attributes$stringProperty('value');
-var $author$project$Main$guestBody = function (token) {
-	return _List_fromArray(
-		[
-			$elm$html$Html$text('Input Token: '),
-			A2(
-			$elm$html$Html$input,
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$placeholder('Please input here'),
-					$elm$html$Html$Attributes$value(token),
-					$elm$html$Html$Events$onInput($author$project$Main$InputUserToken)
-				]),
-			_List_Nil),
-			A2(
-			$elm$html$Html$button,
-			_List_fromArray(
-				[
-					$elm$html$Html$Events$onClick($author$project$Main$Enter)
-				]),
-			_List_fromArray(
-				[
-					$elm$html$Html$text('Enter')
-				]))
-		]);
-};
-var $author$project$Main$invalidTokenBody = function (token) {
-	return _Utils_ap(
-		$author$project$Main$guestBody(token),
-		_List_fromArray(
+var $author$project$Main$guestBody = F2(
+	function (rules, token) {
+		return _List_fromArray(
 			[
-				A2($elm$html$Html$br, _List_Nil, _List_Nil),
 				A2(
-				$elm$html$Html$p,
+				$elm$html$Html$h1,
+				_List_Nil,
 				_List_fromArray(
 					[
-						A2($elm$html$Html$Attributes$style, 'color', '#F00')
+						$elm$html$Html$text('Input Token: ')
+					])),
+				A2(
+				$elm$html$Html$input,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$placeholder('Please input here'),
+						$elm$html$Html$Attributes$value(token),
+						$elm$html$Html$Events$onInput($author$project$Main$InputUserToken)
+					]),
+				_List_Nil),
+				A2(
+				$elm$html$Html$button,
+				_List_fromArray(
+					[
+						$elm$html$Html$Events$onClick($author$project$Main$Enter)
 					]),
 				_List_fromArray(
 					[
-						$elm$html$Html$text('InvalidToken.')
-					]))
-			]));
-};
-var $elm$html$Html$h1 = _VirtualDom_node('h1');
+						$elm$html$Html$text('Enter')
+					])),
+				A2(
+				$elm$html$Html$h1,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Rules')
+					])),
+				A2(
+				$elm$html$Html$ul,
+				_List_Nil,
+				A2(
+					$elm$core$List$map,
+					function (rule) {
+						return A2(
+							$elm$html$Html$li,
+							_List_Nil,
+							_List_fromArray(
+								[
+									$elm$html$Html$text(rule)
+								]));
+					},
+					rules))
+			]);
+	});
+var $author$project$Main$invalidTokenBody = F2(
+	function (rules, token) {
+		return _Utils_ap(
+			A2($author$project$Main$guestBody, rules, token),
+			_List_fromArray(
+				[
+					A2($elm$html$Html$br, _List_Nil, _List_Nil),
+					A2(
+					$elm$html$Html$p,
+					_List_fromArray(
+						[
+							A2($elm$html$Html$Attributes$style, 'color', '#F00')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text('InvalidToken.')
+						]))
+				]));
+	});
 var $author$project$Main$plBody = F3(
 	function (pl, scenario, passOfEvidences) {
 		return _Utils_ap(
@@ -5935,6 +5993,28 @@ var $author$project$Main$plBody = F3(
 						[
 							$elm$html$Html$text('Player Mode: ' + pl.p)
 						])),
+					A2(
+					$elm$html$Html$h1,
+					_List_Nil,
+					_List_fromArray(
+						[
+							$elm$html$Html$text('Rules')
+						])),
+					A2(
+					$elm$html$Html$ul,
+					_List_Nil,
+					A2(
+						$elm$core$List$map,
+						function (rule) {
+							return A2(
+								$elm$html$Html$li,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text(rule)
+									]));
+						},
+						scenario.E)),
 					A2($elm$html$Html$br, _List_Nil, _List_Nil)
 				]),
 			_Utils_ap(
@@ -5969,8 +6049,8 @@ var $author$project$Main$plBody = F3(
 	});
 var $author$project$Main$view = function (model) {
 	return {
-		aB: function () {
-			var _v0 = model.O;
+		aC: function () {
+			var _v0 = model.P;
 			if (_v0.$ === 1) {
 				var error = _v0.a;
 				return $author$project$Main$errorBody(
@@ -5980,20 +6060,20 @@ var $author$project$Main$view = function (model) {
 				var _v1 = model.D;
 				switch (_v1.$) {
 					case 3:
-						return $author$project$Main$invalidTokenBody(model.v);
+						return A2($author$project$Main$invalidTokenBody, scenario.E, model.v);
 					case 2:
-						return $author$project$Main$guestBody(model.v);
+						return A2($author$project$Main$guestBody, scenario.E, model.v);
 					case 0:
 						return $author$project$Main$gmBody(scenario);
 					default:
 						var pl = _v1.a;
-						return A3($author$project$Main$plBody, pl, scenario, model.I);
+						return A3($author$project$Main$plBody, pl, scenario, model.J);
 				}
 			}
 		}(),
-		au: 'Closed Circle'
+		av: 'Closed Circle'
 	};
 };
 var $author$project$Main$main = $elm$browser$Browser$document(
-	{aI: $author$project$Main$init, aO: $author$project$Main$subscriptions, aP: $author$project$Main$update, aQ: $author$project$Main$view});
+	{aJ: $author$project$Main$init, aO: $author$project$Main$subscriptions, aP: $author$project$Main$update, aQ: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)(0)}});}(this));

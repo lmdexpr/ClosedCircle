@@ -146,8 +146,8 @@ view model =
       Err error -> errorBody (D.errorToString error)
       Ok scenario ->
         case model.role of
-          InvalidToken -> invalidTokenBody model.token
-          Guest -> guestBody model.token
+          InvalidToken -> invalidTokenBody scenario.rules model.token
+          Guest -> guestBody scenario.rules model.token
           GM    -> gmBody scenario
           PL pl -> plBody pl scenario model.passOfEvidences
   }
@@ -159,19 +159,23 @@ errorBody msg =
   , text msg
   ]
 
-invalidTokenBody : String -> List (Html Msg)
-invalidTokenBody token = guestBody token ++ [ br [] [], p [ style "color" "#F00" ] [ text "InvalidToken." ] ]
+invalidTokenBody : List String -> String -> List (Html Msg)
+invalidTokenBody rules token = guestBody rules token ++ [ br [] [], p [ style "color" "#F00" ] [ text "InvalidToken." ] ]
 
-guestBody : String -> List (Html Msg)
-guestBody token =
-  [ text "Input Token: "
+guestBody : List String -> String -> List (Html Msg)
+guestBody rules token =
+  [ h1 [] [ text "Input Token: " ]
   , input [ placeholder "Please input here", value token, onInput InputUserToken ] []
   , button [ onClick Enter ] [ text "Enter" ]
+  , h1 [] [ text "Rules" ]
+  , ul [] <| map (\rule -> li [] [ text rule ]) rules
   ]
 
 gmBody : Scenario -> List (Html Msg)
 gmBody scenario =
-  [ text "Game Master Mode"
+  [ h1 [] [ text "Game Master Mode" ]
+  , h1 [] [ text "Rules" ]
+  , ul [] <| map (\rule -> li [] [ text rule ]) scenario.rules
   , br [] []
   ] ++ htmlOfEvidences (map (\evi -> (evi.name, evi.password)) scenario.evidences |> Dict.fromList) scenario.evidences
     ++ (concat <| intersperse [br [] [], hr [] [], br [] []] <| map htmlOfPlayer scenario.players)
@@ -179,6 +183,8 @@ gmBody scenario =
 plBody : Player -> Scenario -> Dict String String -> List (Html Msg)
 plBody pl scenario passOfEvidences =
   [ h1 [] [ text ("Player Mode: " ++ pl.name) ]
+  , h1 [] [ text "Rules" ]
+  , ul [] <| map (\rule -> li [] [ text rule ]) scenario.rules
   , br [] []
   ] ++
   [ hr [] []
@@ -198,8 +204,7 @@ htmlOfEvidences dict =
 htmlOfEvidence : Bool -> Evidence -> List (Html Msg)
 htmlOfEvidence unlocked evidence =
   [ img [ style "width" "40px", style "height" "40px", src <| Maybe.withDefault "" (Maybe.map Url.toString evidence.icon) ] []
-  , p [] [ text evidence.name ]
-  , input [ placeholder (if unlocked then "UNLOCKED!" else "LOCKED"), disabled unlocked, onInput (InputEvidenceToken evidence.name) ] []
+  , p [] [ text (evidence.name ++ "  ") , input [ placeholder (if unlocked then "UNLOCKED!" else "LOCKED"), disabled unlocked, onInput (InputEvidenceToken evidence.name) ] [] ]
   ] ++ if unlocked then [ br [] [], p [] [ text evidence.contents ] ] else []
 
 htmlOfPlayer : Player -> List (Html Msg)

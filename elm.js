@@ -5848,7 +5848,7 @@ var $author$project$Main$gmBody = function (scenario) {
 						$elm$html$Html$text('Rules')
 					])),
 				A2(
-				$elm$html$Html$ul,
+				$elm$html$Html$ol,
 				_List_Nil,
 				A2(
 					$elm$core$List$map,
@@ -5875,16 +5875,21 @@ var $author$project$Main$gmBody = function (scenario) {
 						},
 						scenario.y)),
 				scenario.y),
-			$elm$core$List$concat(
-				A2(
-					$elm$core$List$intersperse,
-					_List_fromArray(
-						[
-							A2($elm$html$Html$br, _List_Nil, _List_Nil),
-							A2($elm$html$Html$hr, _List_Nil, _List_Nil),
-							A2($elm$html$Html$br, _List_Nil, _List_Nil)
-						]),
-					A2($elm$core$List$map, $author$project$Main$htmlOfPlayer, scenario.N)))));
+			_Utils_ap(
+				_List_fromArray(
+					[
+						A2($elm$html$Html$br, _List_Nil, _List_Nil)
+					]),
+				$elm$core$List$concat(
+					A2(
+						$elm$core$List$intersperse,
+						_List_fromArray(
+							[
+								A2($elm$html$Html$br, _List_Nil, _List_Nil),
+								A2($elm$html$Html$hr, _List_Nil, _List_Nil),
+								A2($elm$html$Html$br, _List_Nil, _List_Nil)
+							]),
+						A2($elm$core$List$map, $author$project$Main$htmlOfPlayer, scenario.N))))));
 };
 var $author$project$Main$Enter = {$: 0};
 var $author$project$Main$InputUserToken = function (a) {
@@ -5938,6 +5943,7 @@ var $author$project$Main$guestBody = F2(
 					[
 						$elm$html$Html$text('Enter')
 					])),
+				A2($elm$html$Html$br, _List_Nil, _List_Nil),
 				A2(
 				$elm$html$Html$h1,
 				_List_Nil,
@@ -5946,7 +5952,7 @@ var $author$project$Main$guestBody = F2(
 						$elm$html$Html$text('Rules')
 					])),
 				A2(
-				$elm$html$Html$ul,
+				$elm$html$Html$ol,
 				_List_Nil,
 				A2(
 					$elm$core$List$map,
@@ -6001,7 +6007,7 @@ var $author$project$Main$plBody = F3(
 							$elm$html$Html$text('Rules')
 						])),
 					A2(
-					$elm$html$Html$ul,
+					$elm$html$Html$ol,
 					_List_Nil,
 					A2(
 						$elm$core$List$map,

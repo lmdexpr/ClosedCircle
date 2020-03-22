@@ -167,24 +167,26 @@ guestBody rules token =
   [ h1 [] [ text "Input Token: " ]
   , input [ placeholder "Please input here", value token, onInput InputUserToken ] []
   , button [ onClick Enter ] [ text "Enter" ]
+  , br [] []
   , h1 [] [ text "Rules" ]
-  , ul [] <| map (\rule -> li [] [ text rule ]) rules
+  , ol [] <| map (\rule -> li [] [ text rule ]) rules
   ]
 
 gmBody : Scenario -> List (Html Msg)
 gmBody scenario =
   [ h1 [] [ text "Game Master Mode" ]
   , h1 [] [ text "Rules" ]
-  , ul [] <| map (\rule -> li [] [ text rule ]) scenario.rules
+  , ol [] <| map (\rule -> li [] [ text rule ]) scenario.rules
   , br [] []
   ] ++ htmlOfEvidences (map (\evi -> (evi.name, evi.password)) scenario.evidences |> Dict.fromList) scenario.evidences
+    ++ [ br [] [] ]
     ++ (concat <| intersperse [br [] [], hr [] [], br [] []] <| map htmlOfPlayer scenario.players)
 
 plBody : Player -> Scenario -> Dict String String -> List (Html Msg)
 plBody pl scenario passOfEvidences =
   [ h1 [] [ text ("Player Mode: " ++ pl.name) ]
   , h1 [] [ text "Rules" ]
-  , ul [] <| map (\rule -> li [] [ text rule ]) scenario.rules
+  , ol [] <| map (\rule -> li [] [ text rule ]) scenario.rules
   , br [] []
   ] ++
   [ hr [] []

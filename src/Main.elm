@@ -6,7 +6,7 @@ import Dict exposing (Dict)
 import Browser
 import Browser.Navigation as Nav
 
-import Html exposing (Html, text, br, hr, input, button, p, img, li, ol, ul)
+import Html exposing (Html, text, br, hr, input, button, p, img, li, ol, ul, h1, h2)
 import Html.Attributes exposing (style, value, placeholder, disabled, src)
 import Html.Events exposing (onClick, onInput)
 
@@ -76,17 +76,23 @@ decoderOfScenario =
 type alias Player =
   { name      : String
   , token     : String
-  , flavors   : List String
+  , role      : String
   , timelines : List String
+  , goal      : String
+  , points    : List String
+  , evidences : List String
   }
 
 decoderOfPlayer : D.Decoder Player
 decoderOfPlayer =
-  D.map4 Player
+  D.map7 Player
     (D.field "name" D.string)
     (D.field "token" D.string)
-    (D.field "flavors" (D.list D.string))
+    (D.field "role" D.string)
     (D.field "timelines" (D.list D.string))
+    (D.field "goal" D.string)
+    (D.field "points" (D.list D.string))
+    (D.field "evidences" (D.list D.string))
 
 type alias Evidence =
   { name     : String
@@ -174,16 +180,15 @@ plBody : Player -> Scenario -> Dict String String -> List (Html Msg)
 plBody pl scenario passOfEvidences =
   [ text ("Player Mode: " ++ pl.name)
   , br [] []
-  , hr [] []
-  , br [] []
-  , text ("Evidences:")
-  , br [] []
-  ] ++ htmlOfEvidences passOfEvidences scenario.evidences ++
-  [ br [] []
-  , hr [] []
+  ] ++
+  [ hr [] []
   , text "Player Info: "
   , br [] []
-  ] ++ htmlOfPlayer pl
+  ] ++ htmlOfPlayer pl ++
+  [ hr [] []
+  , text ("Evidences:")
+  , br [] []
+  ] ++ htmlOfEvidences passOfEvidences scenario.evidences
 
 htmlOfEvidences : Dict String String -> List Evidence -> List (Html Msg)
 htmlOfEvidences dict =
@@ -199,8 +204,25 @@ htmlOfEvidence unlocked evidence =
 
 htmlOfPlayer : Player -> List (Html Msg)
 htmlOfPlayer pl =
-  [ text ("Name: " ++ pl.name)
+  [ h2 [] [ text ("Name: " ++ pl.name) ]
   , br [] []
-  , ul [] <| map (\str -> li [] [ text str ]) pl.flavors
+  , h2 [] [ text "Role:" ]
+  , br [] []
+  , p  [] [ text pl.role ]
+  , br [] []
+  , h2 [] [ text "Timelines:"]
+  , br [] []
   , ol [] <| map (\str -> li [] [ text str ]) pl.timelines
+  , br [] []
+  , h2 [] [ text "Goals:" ]
+  , br [] []
+  , p  [] [ text pl.goal ]
+  , br [] []
+  , h2 [] [ text "Points:" ]
+  , br [] []
+  , ol [] <| map (\str -> li [] [ text str ]) pl.points
+  , br [] []
+  , h2 [] [ text "Known Evidences" ]
+  , ol [] <| map (\str -> li [] [ text str ]) pl.evidences
   ]
+

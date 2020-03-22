@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.Q.B === region.W.B)
+	if (region.Q.C === region.W.C)
 	{
-		return 'on line ' + region.Q.B;
+		return 'on line ' + region.Q.C;
 	}
-	return 'on lines ' + region.Q.B + ' through ' + region.W.B;
+	return 'on lines ' + region.Q.C + ' through ' + region.W.C;
 }
 
 
@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aH,
+		impl.aI,
+		impl.aP,
 		impl.aO,
-		impl.aN,
 		function() { return function() {} }
 	);
 });
@@ -2706,7 +2706,7 @@ var _VirtualDom_mapEventRecord = F2(function(func, record)
 	return {
 		o: func(record.o),
 		R: record.R,
-		M: record.M
+		N: record.N
 	}
 });
 
@@ -2978,7 +2978,7 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.R;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.M) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.N) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3928,11 +3928,11 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aH,
+		impl.aI,
+		impl.aP,
 		impl.aO,
-		impl.aN,
 		function(sendToApp, initialModel) {
-			var view = impl.aP;
+			var view = impl.aQ;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -3964,12 +3964,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aH,
+		impl.aI,
+		impl.aP,
 		impl.aO,
-		impl.aN,
 		function(sendToApp, initialModel) {
 			var divertHrefToApp = impl.P && impl.P(sendToApp)
-			var view = impl.aP;
+			var view = impl.aQ;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3977,12 +3977,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.aA);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.aB);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.at) && (_VirtualDom_doc.title = title = doc.at);
+				(title !== doc.au) && (_VirtualDom_doc.title = title = doc.au);
 			});
 		}
 	);
@@ -4038,8 +4038,8 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.aI;
-	var onUrlRequest = impl.aJ;
+	var onUrlChange = impl.aJ;
+	var onUrlRequest = impl.aK;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
@@ -4059,9 +4059,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.al === next.al
+							&& curr.am === next.am
 							&& curr.ab === next.ab
-							&& curr.ai.a === next.ai.a
+							&& curr.aj.a === next.aj.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4069,13 +4069,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		aH: function(flags)
+		aI: function(flags)
 		{
-			return A3(impl.aH, flags, _Browser_getUrl(), key);
+			return A3(impl.aI, flags, _Browser_getUrl(), key);
 		},
+		aQ: impl.aQ,
 		aP: impl.aP,
-		aO: impl.aO,
-		aN: impl.aN
+		aO: impl.aO
 	});
 }
 
@@ -4141,17 +4141,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { aF: 'hidden', aB: 'visibilitychange' }
+		? { aG: 'hidden', aC: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { aF: 'mozHidden', aB: 'mozvisibilitychange' }
+		? { aG: 'mozHidden', aC: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { aF: 'msHidden', aB: 'msvisibilitychange' }
+		? { aG: 'msHidden', aC: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { aF: 'webkitHidden', aB: 'webkitvisibilitychange' }
-		: { aF: 'hidden', aB: 'visibilitychange' };
+		? { aG: 'webkitHidden', aC: 'webkitvisibilitychange' }
+		: { aG: 'hidden', aC: 'visibilitychange' };
 }
 
 
@@ -4232,11 +4232,11 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		ap: _Browser_getScene(),
-		au: {
-			aw: _Browser_window.pageXOffset,
-			ax: _Browser_window.pageYOffset,
-			av: _Browser_doc.documentElement.clientWidth,
+		aq: _Browser_getScene(),
+		av: {
+			ax: _Browser_window.pageXOffset,
+			ay: _Browser_window.pageYOffset,
+			aw: _Browser_doc.documentElement.clientWidth,
 			aa: _Browser_doc.documentElement.clientHeight
 		}
 	};
@@ -4247,7 +4247,7 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		av: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		aw: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
 		aa: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
@@ -4271,14 +4271,14 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			ap: {
-				av: node.scrollWidth,
+			aq: {
+				aw: node.scrollWidth,
 				aa: node.scrollHeight
 			},
-			au: {
-				aw: node.scrollLeft,
-				ax: node.scrollTop,
-				av: node.clientWidth,
+			av: {
+				ax: node.scrollLeft,
+				ay: node.scrollTop,
+				aw: node.clientWidth,
 				aa: node.clientHeight
 			}
 		};
@@ -4309,17 +4309,17 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			ap: _Browser_getScene(),
-			au: {
-				aw: x,
-				ax: y,
-				av: _Browser_doc.documentElement.clientWidth,
+			aq: _Browser_getScene(),
+			av: {
+				ax: x,
+				ay: y,
+				aw: _Browser_doc.documentElement.clientWidth,
 				aa: _Browser_doc.documentElement.clientHeight
 			},
-			aD: {
-				aw: x + rect.left,
-				ax: y + rect.top,
-				av: rect.width,
+			aE: {
+				ax: x + rect.left,
+				ay: y + rect.top,
+				aw: rect.width,
 				aa: rect.height
 			}
 		};
@@ -4859,7 +4859,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {Z: fragment, ab: host, ag: path, ai: port_, al: protocol, am: query};
+		return {Y: fragment, ab: host, ag: path, aj: port_, am: protocol, an: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5141,16 +5141,16 @@ var $elm$browser$Browser$document = _Browser_document;
 var $author$project$Main$Guest = {$: 2};
 var $author$project$Main$Model = F4(
 	function (role, token, passOfEvidences, scenario) {
-		return {H: passOfEvidences, N: role, O: scenario, v: token};
+		return {I: passOfEvidences, D: role, O: scenario, v: token};
 	});
 var $elm$json$Json$Decode$decodeValue = _Json_run;
 var $author$project$Main$Scenario = F5(
 	function (title, rules, gmToken, players, evidences) {
-		return {G: evidences, _: gmToken, L: players, aM: rules, at: title};
+		return {y: evidences, Z: gmToken, M: players, aN: rules, au: title};
 	});
 var $author$project$Main$Evidence = F4(
 	function (name, password, icon, contents) {
-		return {U: contents, ac: icon, p: name, K: password};
+		return {U: contents, ac: icon, p: name, L: password};
 	});
 var $elm$json$Json$Decode$field = _Json_decodeField;
 var $elm$json$Json$Decode$map4 = _Json_map4;
@@ -5165,23 +5165,30 @@ var $author$project$Main$decoderOfEvidence = A5(
 		$elm$url$Url$fromString,
 		A2($elm$json$Json$Decode$field, 'icon', $elm$json$Json$Decode$string)),
 	A2($elm$json$Json$Decode$field, 'contents', $elm$json$Json$Decode$string));
-var $author$project$Main$Player = F4(
-	function (name, token, flavors, timelines) {
-		return {Y: flavors, p: name, as: timelines, v: token};
+var $author$project$Main$Player = F7(
+	function (name, token, role, timelines, goal, points, evidences) {
+		return {y: evidences, _: goal, p: name, ai: points, D: role, at: timelines, v: token};
 	});
 var $elm$json$Json$Decode$list = _Json_decodeList;
-var $author$project$Main$decoderOfPlayer = A5(
-	$elm$json$Json$Decode$map4,
+var $elm$json$Json$Decode$map7 = _Json_map7;
+var $author$project$Main$decoderOfPlayer = A8(
+	$elm$json$Json$Decode$map7,
 	$author$project$Main$Player,
 	A2($elm$json$Json$Decode$field, 'name', $elm$json$Json$Decode$string),
 	A2($elm$json$Json$Decode$field, 'token', $elm$json$Json$Decode$string),
-	A2(
-		$elm$json$Json$Decode$field,
-		'flavors',
-		$elm$json$Json$Decode$list($elm$json$Json$Decode$string)),
+	A2($elm$json$Json$Decode$field, 'role', $elm$json$Json$Decode$string),
 	A2(
 		$elm$json$Json$Decode$field,
 		'timelines',
+		$elm$json$Json$Decode$list($elm$json$Json$Decode$string)),
+	A2($elm$json$Json$Decode$field, 'goal', $elm$json$Json$Decode$string),
+	A2(
+		$elm$json$Json$Decode$field,
+		'points',
+		$elm$json$Json$Decode$list($elm$json$Json$Decode$string)),
+	A2(
+		$elm$json$Json$Decode$field,
+		'evidences',
 		$elm$json$Json$Decode$list($elm$json$Json$Decode$string)));
 var $elm$json$Json$Decode$map5 = _Json_map5;
 var $author$project$Main$decoderOfScenario = A6(
@@ -5356,7 +5363,7 @@ var $elm$core$List$head = function (list) {
 };
 var $author$project$Main$tokenToRole = F2(
 	function (scenario, token) {
-		if (_Utils_eq(scenario._, token)) {
+		if (_Utils_eq(scenario.Z, token)) {
 			return $author$project$Main$GM;
 		} else {
 			var _v0 = $elm$core$List$head(
@@ -5365,7 +5372,7 @@ var $author$project$Main$tokenToRole = F2(
 					function (p) {
 						return _Utils_eq(p.v, token);
 					},
-					scenario.L));
+					scenario.M));
 			if (!_v0.$) {
 				var p = _v0.a;
 				return $author$project$Main$PL(p);
@@ -5385,7 +5392,7 @@ var $author$project$Main$update = F2(
 						_Utils_update(
 							model,
 							{
-								N: A2($author$project$Main$tokenToRole, scenario, model.v)
+								D: A2($author$project$Main$tokenToRole, scenario, model.v)
 							}),
 						$elm$core$Platform$Cmd$none);
 				} else {
@@ -5405,7 +5412,7 @@ var $author$project$Main$update = F2(
 					_Utils_update(
 						model,
 						{
-							H: A3($elm$core$Dict$insert, evidenceName, token, model.H)
+							I: A3($elm$core$Dict$insert, evidenceName, token, model.I)
 						}),
 					$elm$core$Platform$Cmd$none);
 		}
@@ -5579,7 +5586,7 @@ var $elm$url$Url$addPrefixed = F3(
 	});
 var $elm$url$Url$toString = function (url) {
 	var http = function () {
-		var _v0 = url.al;
+		var _v0 = url.am;
 		if (!_v0) {
 			return 'http://';
 		} else {
@@ -5589,15 +5596,15 @@ var $elm$url$Url$toString = function (url) {
 	return A3(
 		$elm$url$Url$addPrefixed,
 		'#',
-		url.Z,
+		url.Y,
 		A3(
 			$elm$url$Url$addPrefixed,
 			'?',
-			url.am,
+			url.an,
 			_Utils_ap(
 				A2(
 					$elm$url$Url$addPort,
-					url.ai,
+					url.aj,
 					_Utils_ap(http, url.ab)),
 				url.ag)));
 };
@@ -5694,35 +5701,50 @@ var $author$project$Main$htmlOfEvidences = function (dict) {
 						A2(
 							$elm$core$Maybe$map,
 							function (p) {
-								return _Utils_eq(p, evi.K);
+								return _Utils_eq(p, evi.L);
 							},
 							A2($elm$core$Dict$get, evi.p, dict))),
 					evi);
 			}));
 };
+var $elm$html$Html$h2 = _VirtualDom_node('h2');
 var $elm$html$Html$li = _VirtualDom_node('li');
 var $elm$html$Html$ol = _VirtualDom_node('ol');
-var $elm$html$Html$ul = _VirtualDom_node('ul');
 var $author$project$Main$htmlOfPlayer = function (pl) {
 	return _List_fromArray(
 		[
-			$elm$html$Html$text('Name: ' + pl.p),
+			A2(
+			$elm$html$Html$h2,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Name: ' + pl.p)
+				])),
 			A2($elm$html$Html$br, _List_Nil, _List_Nil),
 			A2(
-			$elm$html$Html$ul,
+			$elm$html$Html$h2,
 			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Role:')
+				])),
+			A2($elm$html$Html$br, _List_Nil, _List_Nil),
 			A2(
-				$elm$core$List$map,
-				function (str) {
-					return A2(
-						$elm$html$Html$li,
-						_List_Nil,
-						_List_fromArray(
-							[
-								$elm$html$Html$text(str)
-							]));
-				},
-				pl.Y)),
+			$elm$html$Html$p,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text(pl.D)
+				])),
+			A2($elm$html$Html$br, _List_Nil, _List_Nil),
+			A2(
+			$elm$html$Html$h2,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Timelines:')
+				])),
+			A2($elm$html$Html$br, _List_Nil, _List_Nil),
 			A2(
 			$elm$html$Html$ol,
 			_List_Nil,
@@ -5737,7 +5759,70 @@ var $author$project$Main$htmlOfPlayer = function (pl) {
 								$elm$html$Html$text(str)
 							]));
 				},
-				pl.as))
+				pl.at)),
+			A2($elm$html$Html$br, _List_Nil, _List_Nil),
+			A2(
+			$elm$html$Html$h2,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Goals:')
+				])),
+			A2($elm$html$Html$br, _List_Nil, _List_Nil),
+			A2(
+			$elm$html$Html$p,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text(pl._)
+				])),
+			A2($elm$html$Html$br, _List_Nil, _List_Nil),
+			A2(
+			$elm$html$Html$h2,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Points:')
+				])),
+			A2($elm$html$Html$br, _List_Nil, _List_Nil),
+			A2(
+			$elm$html$Html$ol,
+			_List_Nil,
+			A2(
+				$elm$core$List$map,
+				function (str) {
+					return A2(
+						$elm$html$Html$li,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text(str)
+							]));
+				},
+				pl.ai)),
+			A2($elm$html$Html$br, _List_Nil, _List_Nil),
+			A2(
+			$elm$html$Html$h2,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Known Evidences')
+				])),
+			A2(
+			$elm$html$Html$ol,
+			_List_Nil,
+			A2(
+				$elm$core$List$map,
+				function (str) {
+					return A2(
+						$elm$html$Html$li,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text(str)
+							]));
+				},
+				pl.y))
 		]);
 };
 var $author$project$Main$gmBody = function (scenario) {
@@ -5754,10 +5839,10 @@ var $author$project$Main$gmBody = function (scenario) {
 					A2(
 						$elm$core$List$map,
 						function (evi) {
-							return _Utils_Tuple2(evi.p, evi.K);
+							return _Utils_Tuple2(evi.p, evi.L);
 						},
-						scenario.G)),
-				scenario.G),
+						scenario.y)),
+				scenario.y),
 			$elm$core$List$concat(
 				A2(
 					$elm$core$List$intersperse,
@@ -5767,7 +5852,7 @@ var $author$project$Main$gmBody = function (scenario) {
 							A2($elm$html$Html$hr, _List_Nil, _List_Nil),
 							A2($elm$html$Html$br, _List_Nil, _List_Nil)
 						]),
-					A2($elm$core$List$map, $author$project$Main$htmlOfPlayer, scenario.L)))));
+					A2($elm$core$List$map, $author$project$Main$htmlOfPlayer, scenario.M)))));
 };
 var $author$project$Main$Enter = {$: 0};
 var $author$project$Main$InputUserToken = function (a) {
@@ -5840,27 +5925,29 @@ var $author$project$Main$plBody = F3(
 			_List_fromArray(
 				[
 					$elm$html$Html$text('Player Mode: ' + pl.p),
-					A2($elm$html$Html$br, _List_Nil, _List_Nil),
-					A2($elm$html$Html$hr, _List_Nil, _List_Nil),
-					A2($elm$html$Html$br, _List_Nil, _List_Nil),
-					$elm$html$Html$text('Evidences:'),
 					A2($elm$html$Html$br, _List_Nil, _List_Nil)
 				]),
 			_Utils_ap(
-				A2($author$project$Main$htmlOfEvidences, passOfEvidences, scenario.G),
+				_List_fromArray(
+					[
+						A2($elm$html$Html$hr, _List_Nil, _List_Nil),
+						$elm$html$Html$text('Player Info: '),
+						A2($elm$html$Html$br, _List_Nil, _List_Nil)
+					]),
 				_Utils_ap(
-					_List_fromArray(
-						[
-							A2($elm$html$Html$br, _List_Nil, _List_Nil),
-							A2($elm$html$Html$hr, _List_Nil, _List_Nil),
-							$elm$html$Html$text('Player Info: '),
-							A2($elm$html$Html$br, _List_Nil, _List_Nil)
-						]),
-					$author$project$Main$htmlOfPlayer(pl))));
+					$author$project$Main$htmlOfPlayer(pl),
+					_Utils_ap(
+						_List_fromArray(
+							[
+								A2($elm$html$Html$hr, _List_Nil, _List_Nil),
+								$elm$html$Html$text('Evidences:'),
+								A2($elm$html$Html$br, _List_Nil, _List_Nil)
+							]),
+						A2($author$project$Main$htmlOfEvidences, passOfEvidences, scenario.y)))));
 	});
 var $author$project$Main$view = function (model) {
 	return {
-		aA: function () {
+		aB: function () {
 			var _v0 = model.O;
 			if (_v0.$ === 1) {
 				var error = _v0.a;
@@ -5868,7 +5955,7 @@ var $author$project$Main$view = function (model) {
 					$elm$json$Json$Decode$errorToString(error));
 			} else {
 				var scenario = _v0.a;
-				var _v1 = model.N;
+				var _v1 = model.D;
 				switch (_v1.$) {
 					case 3:
 						return $author$project$Main$invalidTokenBody(model.v);
@@ -5878,13 +5965,13 @@ var $author$project$Main$view = function (model) {
 						return $author$project$Main$gmBody(scenario);
 					default:
 						var pl = _v1.a;
-						return A3($author$project$Main$plBody, pl, scenario, model.H);
+						return A3($author$project$Main$plBody, pl, scenario, model.I);
 				}
 			}
 		}(),
-		at: 'Closed Circle'
+		au: 'Closed Circle'
 	};
 };
 var $author$project$Main$main = $elm$browser$Browser$document(
-	{aH: $author$project$Main$init, aN: $author$project$Main$subscriptions, aO: $author$project$Main$update, aP: $author$project$Main$view});
+	{aI: $author$project$Main$init, aO: $author$project$Main$subscriptions, aP: $author$project$Main$update, aQ: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)(0)}});}(this));

@@ -7,14 +7,20 @@
       {
         "name"  : "pl 1",
         "token" : "tokenOfPL1",
-        "flavors" : ["Player1 is cool", "murder"],
-        "timelines" : ["12:30; eat cookies", "13:00; kill"]
+        "role" : "murder",
+        "timelines" : ["12:30; eat cookies", "13:00; kill"],
+        "goal": "kill a human",
+        "points": ["hided: 7pt"],
+        "evidences": ["evidence 1: token is passwordOfEvidence1"]
       },
       {
         "name"  : "pl 2",
         "token" : "tokenOfPL2",
-        "flavors" : ["yeaaaaaaaah"],
-        "timelines" : []
+        "role" : "killed",
+        "timelines" : [],
+        "goal": "",
+        "points": [""],
+        "evidences": [""]
       }
     ],
   "evidences" :
